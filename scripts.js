@@ -1,47 +1,30 @@
-var typed = new Typed(".typewriter-text",
-    {
-        strings: [" ",
-            "Web Developer",
+const countdown = document.getElementById("countdown");
 
-            " Designer",
+function updateCountdown() {
+  const targetDate = new Date("2024-12-12T00:00:00").getTime();
+  const now = new Date().getTime();
+  const difference = targetDate - now;
 
-            "Freelancer",
-            
-            "Youtuber"
-        ],
-        typeSpeed: 100,
-        backSpeed: 70,
-        loop:true
-        
-    }
-)
+  if (difference <= 0) {
+    // عند انتهاء العد التنازلي، الانتقال إلى الصفحة الجديدة
+    window.location.href = "message.html"; // اسم الصفحة الجديدة
 
-let menuIcon = document.querySelector('#menu-icon');
-let navbar = document.querySelector('.navbar');
+    return;
+  }
 
-let section = document.querySelectorAll('.section');
-let navLinks = document.querySelectorAll('.header nav a');
+  const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((difference % (1000 
 
-window.onscroll = () => {
-    sections.forEach(sec => {
-        let top = window.scrollY;
-        let offset = window.offsetTop - 150;
-        let height = window.offsetHeight;
-        let id = sec.getAttribute('id');
+* 60)) / 1000);
 
-        if (top >= offset && top < offset + height){
-            navLinks.forEach(links => {
-                links.classList.remove('active');
-                document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
-                
-            })
-        }
-    })
-}
-
-menuIcon.onclick = () => {
-    menuIcon.classList.toggle('bx-x');
-    navbar.classList.toggle('active');
+  document.getElementById("days").textContent = days;
+  document.getElementById("hours").textContent = hours;
+  document.getElementById("minutes").textContent = minutes;
+  document.getElementById("seconds").textContent = seconds;
 }
 
 
+// تحديث العداد كل ثانية
+setInterval(updateCountdown, 1000);
